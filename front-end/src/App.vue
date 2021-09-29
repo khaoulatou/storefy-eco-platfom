@@ -7,8 +7,12 @@
     <router-link to="/forget">forget password</router-link>
     |
     <router-link to="/pixel">pixel</router-link>
+    |
+    <router-link to="/product">Product</router-link>
+    |
+    <router-link to="/cart">Cart</router-link>
   </div>
-  <router-view/>
+  <router-view />
 </template>
 
 <style lang="scss">

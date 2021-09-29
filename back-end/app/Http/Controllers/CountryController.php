@@ -30,7 +30,7 @@ class CountryController extends Controller
                 ];
             } else {
                 foreach ($arrayCountries as $arr) {
-                    Country::create(['name' => $arr['name'], 'callingCode' => $arr['code']]);
+                    Country::create(['name' => $arr['name'], 'callingCode' => $arr['callingCode']]);
                 }
                 $response = [
                     'success' => 'Countries created successfully',
