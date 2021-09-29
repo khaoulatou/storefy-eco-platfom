@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CommandeController;
 use App\Http\Controllers\CountryController;
 use App\Http\Controllers\EmailVerificationController;
 use App\Http\Controllers\PixelController;
@@ -39,6 +40,10 @@ Route::group(['prefix' => 'v1'], function () {
     Route::post('resend', [EmailVerificationController::class, 'resendVerificationEmail'])->name('verification.resend');
     Route::get('verify-email', [EmailVerificationController::class, 'verify'])->name('verification.verify');
 
+    //commande
+    Route::get('showCommandes', [CommandeController::class, 'showCommandes']);
+    Route::post('createCommande', [CommandeController::class, 'store']);
+    Route::get('getCommandes', [CommandeController::class, 'index']);
 
     // will be authenticated :
     Route::group(['middleware' => ['auth:sanctum']], function () {
@@ -57,7 +62,6 @@ Route::group(['prefix' => 'v1'], function () {
         Route::post('/logout', [AuthController::class, 'logout']);
 
         // update profile router :
-//        Route::post('/profile', [UserAuthentication::class, 'profile']);
+        //        Route::post('/profile', [UserAuthentication::class, 'profile']);
     });
-
 });
