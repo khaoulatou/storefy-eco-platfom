@@ -2,6 +2,8 @@ import { createRouter, createWebHistory } from 'vue-router';
 import Home from '../views/Home.vue';
 import Vue from 'vue'
 import verifiedAccount from "../views/verifiedAccount";
+import Product from '../views/Product';
+import Cart from '../views/Cart';
 // Vue.use(VueRouter);
 
 const routes = [
@@ -9,9 +11,9 @@ const routes = [
     path: '/',
     name: 'Home',
     component: Home,
-  },{
-  path:'/verified-account',
-    name:'verifiedAccount',
+  }, {
+    path: '/verified-account',
+    name: 'verifiedAccount',
     component: verifiedAccount,
     props: route => ({ page: parseInt(route.query.email) })
   },
@@ -23,7 +25,7 @@ const routes = [
     // which is lazy-loaded when the route is visited.
     component: () => import(/* webpackChunkName: "login" */ '../views/Login.vue'),
 
-  },{
+  }, {
     path: '/pixel',
     name: 'pixel',
     // route level code-splitting
@@ -52,35 +54,43 @@ const routes = [
     // this generates a separate chunk (about.[hash].helpers) for this route
     // which is lazy-loaded when the route is visited.
     component: () => import(/* webpackChunkName: "reset" */ '../views/Reset.vue'),
-  },{
+  }, {
     path: '/activated/:link',
     name: 'activated',
-    props:true,
+    props: true,
     // route level code-splitting
     // this generates a separate chunk (about.[hash].helpers) for this route
     // which is lazy-loaded when the route is visited.
     component: () => import(/* webpackChunkName: "reset" */ '../views/EmailActivated.vue'),
-  },{
+  }, {
     path: '/Profile',
     name: 'profile',
     // route level code-splitting
     // this generates a separate chunk (about.[hash].helpers) for this route
     // which is lazy-loaded when the route is visited.
     component: () => import(/* webpackChunkName: "reset" */ '../views/Profile.vue'),
-  },{
+  }, {
     path: '/verify-email',
     name: 'VerifyEmail',
     // route level code-splitting
     // this generates a separate chunk (about.[hash].helpers) for this route
     // which is lazy-loaded when the route is visited.
     component: () => import(/* webpackChunkName: "reset" */ '../views/VerifyEmail.vue'),
-  },{
+  }, {
     path: '/email/verify/success',
     name: 'Email-success',
     // route level code-splitting
     // this generates a separate chunk (about.[hash].helpers) for this route
     // which is lazy-loaded when the route is visited.
     component: () => import(/* webpackChunkName: "reset" */ '../views/EmailSuccess.vue'),
+  }, , {
+    path: '/product',
+    name: 'product',
+    component: Product,
+  }, {
+    path: '/Cart',
+    name: 'Cart',
+    component: Cart,
   },
 ];
 
