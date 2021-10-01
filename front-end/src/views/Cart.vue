@@ -39,15 +39,18 @@
             <span class="font-weight-bold">{{ produit.titre }}</span>
           </div>
           <div class="d-flex flex-row align-items-center qty">
-            <i class="fa fa-minus text-danger"></i>
+            <i class="fa fa-minus text-danger" @click="minus(produit.id)"></i>
             <h5 class="text-grey mt-1 mr-1 ml-1 p-1">{{ produit.quantity }}</h5>
-            <i class="fa fa-plus text-success"></i>
+            <i class="fa fa-plus text-success" @click="add(produit.id)"></i>
           </div>
           <div>
             <h5 class="text-grey">{{ produit.prix * produit.quantity }} $</h5>
           </div>
           <div class="d-flex align-items-center">
-            <i class="fa fa-trash mb-1 text-danger" @click="removeProduit(produit)"></i>
+            <i
+              class="fa fa-trash mb-1 text-danger"
+              @click="removeProduit(produit.id)"
+            ></i>
           </div>
         </div>
 
@@ -70,24 +73,47 @@
 <script>
 export default {
   name: "cart",
-  mounted() {
-    this.localData = JSON.parse(localStorage.getItem("produits"));
-  },
-  data() {
+   data() {
     return {
-      localData: [],
+      localData:[],
       // panierProduit: [],
       ProduitArr: [],
       // compt: 0,
     };
   },
+  mounted() {
+    this.localData=JSON.parse(localStorage.getItem('produits'))
+  },
+
 
   methods: {
-    removeProduit($item) {
-      console.log($item);
-      let arrayLocal = this.localData;
-      console.log(arrayLocal);
+    removeProduit(id) {
+      console.log(id);
+      this.localData = this.localData.filter((element) => element.id !== id);
+      localStorage.setItem("produits", JSON.stringify(this.localData));
     },
+    add(id){
+      console.log('add');
+      this.localData  = this.localData.map(element=>{
+        if(element.id==id){
+          element.qauntity++
+        }
+        return element
+      });
+      localStorage.setItem("produits", JSON.stringify(this.localData));
+    },
+        minus(id){
+      this.localData  = this.localData.map(element,i,arr=>{
+        if(element.id==id){
+          if(element.qauntity==0){
+            return arr.filter(ele=>ele.id!=id);
+          }else {
+            element.qauntity--;
+          }
+        }
+      });
+      localStorage.setItem("produits", JSON.stringify(this.localData));
+    }
   },
 };
 </script>
