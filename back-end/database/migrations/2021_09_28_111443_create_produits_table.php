@@ -22,6 +22,7 @@ class CreateProduitsTable extends Migration
             $table->double('stock', 8, 2);
             $table->boolean('is_active');
             $table->boolean('upsell');
+            $table->string('cover');
             $table->timestamps();
         });
     }

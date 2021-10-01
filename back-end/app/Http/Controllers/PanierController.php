@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Produit;
+use App\Models\Panier;
 use Illuminate\Http\Request;
 
-class ProduitController extends Controller
+class PanierController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,7 +14,7 @@ class ProduitController extends Controller
      */
     public function index()
     {
-        return Produit::all();
+        //
     }
 
     /**
@@ -35,16 +35,16 @@ class ProduitController extends Controller
      */
     public function store(Request $request)
     {
-        return Produit::create($request->all());
+        //
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Produit  $produit
+     * @param  \App\Models\Panier  $panier
      * @return \Illuminate\Http\Response
      */
-    public function show(Produit $produit)
+    public function show(Panier $panier)
     {
         //
     }
@@ -52,10 +52,10 @@ class ProduitController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Produit  $produit
+     * @param  \App\Models\Panier  $panier
      * @return \Illuminate\Http\Response
      */
-    public function edit(Produit $produit)
+    public function edit(Panier $panier)
     {
         //
     }
@@ -64,10 +64,10 @@ class ProduitController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Produit  $produit
+     * @param  \App\Models\Panier  $panier
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Produit $produit)
+    public function update(Request $request, Panier $panier)
     {
         //
     }
@@ -75,11 +75,11 @@ class ProduitController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Produit  $produit
+     * @param  \App\Models\Panier  $panier
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Produit $produit)
+    public function destroy(Panier $panier)
     {
-        return Produit::destroy($produit);
+        //
     }
 }

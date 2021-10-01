@@ -5,8 +5,10 @@ use App\Http\Controllers\CommandeController;
 use App\Http\Controllers\CountryController;
 use App\Http\Controllers\EmailVerificationController;
 use App\Http\Controllers\PixelController;
+use App\Http\Controllers\ProduitController;
 use App\Http\Controllers\ResetController;
 use App\Http\Controllers\SocialAuthController;
+use App\Models\Produit;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -45,6 +47,9 @@ Route::group(['prefix' => 'v1'], function () {
     Route::post('createCommande', [CommandeController::class, 'store']);
     Route::get('getCommandes', [CommandeController::class, 'index']);
 
+
+    //produit
+    Route::resource('/produit', ProduitController::class);
     // will be authenticated :
     Route::group(['middleware' => ['auth:sanctum']], function () {
         Route::get('/user', function (Request $request) {
