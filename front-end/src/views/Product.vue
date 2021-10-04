@@ -65,6 +65,7 @@
 import axios from "axios";
 export default {
   name: "ProductComponnent",
+  inject: ["message"],
   mounted() {
     this.getProduit();
     if (localStorage.getItem("produits")) {
@@ -91,9 +92,14 @@ export default {
       this.listProduits = res.data;
     },
     addToArry(produit) {
+      this.message.message = "added successfully!";
+            console.log(this.message.message);
+            setTimeout(function() {
+              this.message.message = "";
+            }.bind(this), 3000);
       let proObj = { ...produit, quantity: 1 };
       let localData = JSON.parse(localStorage.getItem("produits"));
-      if (!(localData?.some((ele) => ele.id == produit.id))) {
+      if (!localData?.some((ele) => ele.id == produit.id)) {
         this.ProduitArr.push(proObj);
         localStorage.setItem("produits", JSON.stringify(this.ProduitArr));
       } else {
@@ -103,11 +109,19 @@ export default {
           console.log(el);
           if (el.id == produit.id) {
             // console.log(el.id);
-            el.quantity++;
-            console.log(Number(el.quantity));
+            // el.quantity++;
+            // console.log(Number(el.quantity));
+            this.message.message = "already added!";
+            this.message.error = true;
+            console.log(this.message.message);
+            setTimeout(function() {
+              this.message.message = "";
+            this.message.error = false;
+            }.bind(this), 3000);
+            // alert("the product is already added");
           }
           return el;
-        });
+        }.bind(this));
         console.log(newData);
         localStorage.setItem("produits", JSON.stringify(newData));
       }
