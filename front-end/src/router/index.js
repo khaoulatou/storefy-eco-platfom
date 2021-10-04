@@ -4,6 +4,7 @@ import Vue from 'vue'
 import verifiedAccount from "../views/verifiedAccount";
 import Product from '../views/Product';
 import Cart from '../views/Cart';
+import Checkout from '../views/CheckOut';
 // Vue.use(VueRouter);
 
 const routes = [
@@ -91,6 +92,10 @@ const routes = [
     path: '/Cart',
     name: 'Cart',
     component: Cart,
+  }, {
+    path: '/checkout',
+    name: 'Checkout',
+    component: Checkout,
   },
 ];
 

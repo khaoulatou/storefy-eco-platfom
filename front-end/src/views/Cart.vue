@@ -76,8 +76,10 @@
           </div>
           <hr />
           <div class="row">
-            <div class="col" style="padding-left: 0">ITEMS {{localData.length}}</div>
-            <div class="col text-right">$ {{total}}</div>
+            <div class="col" style="padding-left: 0">
+              ITEMS {{ localData.length }}
+            </div>
+            <div class="col text-right">$ {{ total }}</div>
           </div>
           <form>
             <p>SHIPPING</p>
@@ -92,7 +94,7 @@
             style="border-top: 1px solid rgba(0, 0, 0, 0.1); padding: 2vh 0"
           >
             <div class="col">TOTAL PRICE</div>
-            <div class="col text-right">$ {{total+5}}</div>
+            <div class="col text-right">$ {{ total + 5 }}</div>
           </div>
           <button class="btn">CHECKOUT</button>
         </div>
@@ -106,6 +108,10 @@
 <script>
 export default {
   name: "cart",
+  mounted() {
+    this.localData = JSON.parse(localStorage.getItem("produits"));
+    this.getTotal();
+  },
   data() {
     return {
       localData: [],
@@ -114,10 +120,6 @@ export default {
       ProduitArr: [],
       // compt: 0,
     };
-  },
-  mounted() {
-    this.localData = JSON.parse(localStorage.getItem("produits"));
-    this.getTotal();
   },
 
   methods: {

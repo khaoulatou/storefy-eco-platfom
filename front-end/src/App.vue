@@ -11,16 +11,24 @@
     <router-link to="/product">Product</router-link>
     |
     <router-link to="/cart">Cart</router-link>
+    |
+    <router-link to="/checkout">Checkout</router-link>
   </div>
   <router-view />
-    <div v-if="message.message" :class="[message.error?'error-message':'success-message','flash-message']">
-    {{message.message}}
+  <div
+    v-if="message.message"
+    :class="[
+      message.error ? 'error-message' : 'success-message',
+      'flash-message',
+    ]"
+  >
+    {{ message.message }}
   </div>
 </template>
 <script>
 export default {
-  inject:['message']
-}
+  inject: ["message"],
+};
 </script>
 <style lang="scss">
 #app {
@@ -57,6 +65,6 @@ export default {
   right: 10px;
   font-size: 20px;
   width: 250px;
-  background-color: #Fff;
+  background-color: #fff;
 }
 </style>

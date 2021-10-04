@@ -97,6 +97,7 @@ export default {
             setTimeout(function() {
               this.message.message = "";
             }.bind(this), 3000);
+          
       let proObj = { ...produit, quantity: 1 };
       let localData = JSON.parse(localStorage.getItem("produits"));
       if (!localData?.some((ele) => ele.id == produit.id)) {
