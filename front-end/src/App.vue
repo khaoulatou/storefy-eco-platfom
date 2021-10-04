@@ -13,8 +13,15 @@
     <router-link to="/cart">Cart</router-link>
   </div>
   <router-view />
+    <div v-if="message.message" :class="[message.error?'error-message':'success-message','flash-message']">
+    {{message.message}}
+  </div>
 </template>
-
+<script>
+export default {
+  inject:['message']
+}
+</script>
 <style lang="scss">
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
@@ -35,5 +42,21 @@
       color: #42b983;
     }
   }
+}
+.error-message {
+  color: red;
+}
+.success-message {
+  color: greenyellow;
+}
+.flash-message {
+  padding: 12px 25px;
+  border-radius: 15px;
+  position: fixed;
+  bottom: 15px;
+  right: 10px;
+  font-size: 20px;
+  width: 250px;
+  background-color: #Fff;
 }
 </style>
