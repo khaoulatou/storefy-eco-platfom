@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <!-- Content here -->
-    <form class="row g-3">
+    <form class="row g-3" @submit.prevent="addCommande">
       <div class="col-8">
         <div class="row">
           <div class="col-md-6">
@@ -11,7 +11,7 @@
               class="form-control"
               id="destinataire"
               placeholder="Enter recipient data"
-              v-model="destinataire"
+              v-model="form.destinataire"
             />
           </div>
           <div class="col-md-6">
@@ -21,7 +21,7 @@
               class="form-control"
               id="ville"
               placeholder="Enter the city"
-              v-model="ville"
+              v-model="form.ville"
             />
           </div>
           <div class="col-md-6">
@@ -31,7 +31,7 @@
               class="form-control"
               id="phone1"
               placeholder="Enter the first number"
-              v-model="phone1"
+              v-model="form.phone1"
             />
           </div>
           <div class="col-md-6">
@@ -41,7 +41,7 @@
               class="form-control"
               id="phone2"
               placeholder="Enter the second number"
-              v-model="phone2"
+              v-model="form.phone2"
             />
           </div>
           <div class="col-12">
@@ -51,13 +51,11 @@
               class="form-control"
               id="inputAddress"
               placeholder="Enter the address"
-              v-model="address"
+              v-model="form.address"
             />
           </div>
           <div class="col-12">
-            <button type="submit" @click="addCommande" class="btn btn-primary">
-              CHECKOUT
-            </button>
+            <button type="submit" class="btn btn-primary">CHECKOUT</button>
           </div>
         </div>
       </div>
@@ -107,10 +105,13 @@ export default {
   data() {
     return {
       productData: [],
-      ville: "",
-      phone1: "",
-      phone2: "",
-      address: "",
+      form: {
+        destinataire: "",
+        ville: "",
+        phone1: "",
+        phone2: "",
+        address: "",
+      },
       total: null,
     };
   },
@@ -124,10 +125,14 @@ export default {
     },
     async addCommande() {
       // POST request using axios with async/await
-      const product = productData;
+      const product = {
+        productData: this.productData,
+        info: this.form,
+      };
+      console.log(this.form);
       const response = await axios.post(
-        "localhost:8000/api/v1/createCommande",
-        product
+        "http://localhost:8000/api/v1/createCommande",
+        { info: this.form, product: this.productData }
       );
       console.log(response.data);
     },
