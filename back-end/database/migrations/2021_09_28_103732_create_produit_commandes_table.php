@@ -17,8 +17,8 @@ class CreateProduitCommandesTable extends Migration
             $table->foreignId('produit_id')->constrained();
             $table->foreignId('commande_id')->constrained();
             $table->boolean('upsell');
-            $table->double('quantite',8,2);
-            $table->double('totale',8,2);
+            $table->double('quantite', 8, 2);
+            // $table->double('totale',8,2);
             $table->timestamps();
         });
     }
