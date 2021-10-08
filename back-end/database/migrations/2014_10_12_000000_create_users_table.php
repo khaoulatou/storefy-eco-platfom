@@ -23,7 +23,7 @@ class CreateUsersTable extends Migration
             $table->string('storename')->nullable();;
             $table->string('subdomain')->nullable();;
             $table->string('country')->nullable();;
-            $table->string('mobile_number')->nullable();;
+            $table->string('mobile_number')->nullable();
             // $table->boolean('activation')->default(0);
             $table->rememberToken();
             $table->timestamps();
