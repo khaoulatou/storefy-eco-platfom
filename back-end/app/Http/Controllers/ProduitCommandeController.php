@@ -35,7 +35,11 @@ class ProduitCommandeController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // 'produit_id',
+        // 'commande_id',
+        // 'upsell',
+        // 'quantite',
+        // 'totale' => null,
     }
 
     /**
