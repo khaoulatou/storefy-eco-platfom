@@ -3,6 +3,7 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CommandeController;
 use App\Http\Controllers\CountryController;
+use App\Http\Controllers\CouponController;
 use App\Http\Controllers\EmailVerificationController;
 use App\Http\Controllers\PixelController;
 use App\Http\Controllers\ProduitController;
@@ -47,9 +48,21 @@ Route::group(['prefix' => 'v1'], function () {
     Route::post('createCommande', [CommandeController::class, 'store']);
     Route::get('getCommandes', [CommandeController::class, 'index']);
 
+    //coupon
+    Route::get('/coupons', [CouponController::class, 'getAllCoupon']);
+    Route::post('/createCoupon', [CouponController::class, 'createCoupon']);
+    Route::post('/getCoupon/{id}', [CouponController::class, 'getCoupon']);
+
+    //dashboard admin
+    Route::post('/coupon/update/{id}', [CouponController::class, 'updateCoupon']);
+    Route::put('/coupon/create', [CouponController::class, 'createCoupon']);
+    Route::put('/coupon/find', [CouponController::class, 'findCoupon']);
+    Route::put('/coupon/delete', [CouponController::class, 'deleteCoupon']);
 
     //produit
     Route::resource('/produit', ProduitController::class);
+    //get Produits By Commande
+    Route::post('/commande/getProduits/{id}', [ProduitController::class, 'getProduitsByCommande']);
     // will be authenticated :
     Route::group(['middleware' => ['auth:sanctum']], function () {
         Route::get('/user', function (Request $request) {
