@@ -53,6 +53,7 @@ class CommandeController extends Controller
         $data = $request->all();
         $commandeData = $data['commande'];
         $products = $data['products'];
+
         $validator = Validator::make($commandeData, [
             'destinataire' => 'required',
             'phone1' => 'required',
@@ -60,6 +61,7 @@ class CommandeController extends Controller
             'ville_customer' => 'required',
             'address' => 'required',
         ]);
+        
         if ($validator->fails()) {
             return response($validator->errors());
         }
@@ -70,15 +72,17 @@ class CommandeController extends Controller
         $commande->phone2 = $commandeData['phone2'];
         $commande->ville_customer = $commandeData['ville_customer'];
         $commande->addresse = $commandeData['address'];
+        $commande->status = 2;
 
         $commande->save();
         $idCommand = $commande->id;
         $couponExist = trim($commandeData['coupon']) ? 1 : 0;
         if ($couponExist) {
             $couponController = new CouponController();
-            return $couponController->incrementNumber(1, trim($commandeData['coupon']));
+            $couponController->incrementNumber(1, trim($commandeData['coupon']));
         }
-
+        $produitCommandeController = new ProduitCommandeController();
+        return $produitCommandeController->checkout($products, $idCommand);
         return response([
             "success" => true,
             "message" => "List of products to order.",
