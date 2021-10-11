@@ -21,6 +21,7 @@ class CreateCommandesTable extends Migration
             $table->string('phone2');
             $table->string('ville_customer');
             $table->string('addresse');
+            $table->integer('status');
             // $table->foreignId('statut_id')->constrained();
             $table->timestamps();
         });
