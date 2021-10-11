@@ -10,6 +10,7 @@ use App\Http\Controllers\ProduitController;
 use App\Http\Controllers\ResetController;
 use App\Http\Controllers\SocialAuthController;
 use App\Models\Produit;
+use App\Models\ProduitCommande;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -45,13 +46,16 @@ Route::group(['prefix' => 'v1'], function () {
 
     //commande
     Route::get('showCommandes', [CommandeController::class, 'showCommandes']);
-    Route::post('createCommande', [CommandeController::class, 'store']);
+    Route::post('createCommande/', [CommandeController::class, 'createCommande']);
     Route::get('getCommandes', [CommandeController::class, 'index']);
 
     //coupon
     Route::get('/coupons', [CouponController::class, 'getAllCoupon']);
     Route::post('/createCoupon', [CouponController::class, 'createCoupon']);
     Route::post('/getCoupon/{id}', [CouponController::class, 'getCoupon']);
+
+    //commande Produit
+    Route::post('/checkout', [ProduitCommande::class, 'checkout']);
 
     //dashboard admin
     Route::post('/coupon/update/{id}', [CouponController::class, 'updateCoupon']);
