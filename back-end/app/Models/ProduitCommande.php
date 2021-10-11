@@ -13,6 +13,6 @@ class ProduitCommande extends Model
         'commande_id',
         'upsell',
         'quantite',
-        'totale' => null,
+        'totale',
     ];
 }
