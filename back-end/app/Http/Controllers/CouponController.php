@@ -128,7 +128,7 @@ class CouponController extends Controller
             $cou = Coupon::find($coupon->id);
             $cou->nombre_utilisateur++;
             $cou->save();
-            return response(['success' => true, "message" => "The number of uses for the coupon has been modified.", "data" => $coupon]);
+            return response(['success' => true, "message" => "The number of uses for the coupon has been modified.", "data" => $cou]);
         } else {
             return response(['success' => false, "message" => "The number of uses has reached the maximum.",]);
         }
