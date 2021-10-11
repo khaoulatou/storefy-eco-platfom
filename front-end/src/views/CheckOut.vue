@@ -79,7 +79,11 @@
             <option class="text-muted">Standard-Delivery- &euro;5.00</option>
           </select>
           <p>GIVE CODE</p>
-          <input id="code" placeholder="Enter your code" />
+          <input
+            id="code"
+            placeholder="Enter your code"
+            v-model="form.coupon"
+          />
         </form>
         <div
           class="row"
@@ -111,6 +115,7 @@ export default {
         phone1: "",
         phone2: "",
         address: "",
+        coupon: null,
       },
       total: null,
     };
@@ -125,14 +130,14 @@ export default {
     },
     async addCommande() {
       // POST request using axios with async/await
-      const product = {
-        productData: this.productData,
-        info: this.form,
+      const commande = {
+        products: this.productData,
+        commande: this.form,
       };
       console.log(this.form);
       const response = await axios.post(
         "http://localhost:8000/api/v1/createCommande",
-        { info: this.form, product: this.productData }
+        commande
       );
       console.log(response.data);
     },
