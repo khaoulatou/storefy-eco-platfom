@@ -86,4 +86,10 @@ class ProduitCommandeController extends Controller
     {
         //
     }
+
+    //checkout
+    public function checkout(Request $request, $product)
+    {
+        dd($request, $product);
+    }
 }
