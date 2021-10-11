@@ -121,7 +121,7 @@ class CouponController extends Controller
             "data" => $coupon
         ], 201);
     }
-
+    // function for increment Number of use the coupon
     public function incrementNumber($id, $nom)
     {
         $coupon = $this->findCoupon($id, $nom);
