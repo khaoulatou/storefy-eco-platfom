@@ -7,6 +7,7 @@ use App\Models\Coupon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rules\In;
 use PHPUnit\TextUI\XmlConfiguration\Group;
 
 class CommandeController extends Controller
@@ -49,31 +50,33 @@ class CommandeController extends Controller
 
     public function createCommande(Request $request)
     {
-        // dd($request->all(), $id);
-        return response(['request' => $request->all()]);
-        $input = $request->all();
-        $validator = Validator::make($input, [
+        $data = $request->all();
+        $commandeData = $data['commande'];
+        $products = $data['products'];
+        $validator = Validator::make($commandeData, [
             'destinataire' => 'required',
             'phone1' => 'required',
             'phone2' => 'required',
             'ville_customer' => 'required',
-            'addresse' => 'required',
+            'address' => 'required',
         ]);
         if ($validator->fails()) {
-            return $this->sendError('Validation Error.', $validator->errors());
+            return response($validator->errors());
         }
 
         $commande = new Commande();
-        $commande->destinataire = $request->destinataire;
-        $commande->phone1 = $request->phone1;
-        $commande->phone2 = $request->phone2;
-        $commande->ville_customer = $request->ville_customer;
-        $commande->addresse = $request->addresse;
-        $commande->save();
+        $commande->destinataire = $commandeData['destinataire'];
+        $commande->phone1 = $commandeData['phone1'];
+        $commande->phone2 = $commandeData['phone2'];
+        $commande->ville_customer = $commandeData['ville_customer'];
+        $commande->addresse = $commandeData['address'];
 
-        if ($request->couponName != null) {
+        $commande->save();
+        $idCommand = $commande->id;
+        $couponExist = trim($commandeData['coupon']) ? 1 : 0;
+        if ($couponExist) {
             $couponController = new CouponController();
-            $couponController->incrementNumber($id, $request->CouponName);
+            return $couponController->incrementNumber(1, trim($commandeData['coupon']));
         }
 
         return response([
@@ -81,7 +84,6 @@ class CommandeController extends Controller
             "message" => "List of products to order.",
             "data" => $commande->id,
         ], 201);
-        // return response($coupon, 201);
     }
 
     /**
