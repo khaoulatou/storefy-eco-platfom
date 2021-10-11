@@ -47,9 +47,10 @@ class CommandeController extends Controller
         // return Commande::create($request->all());
     }
 
-    public function createCommande(Request $request, $id)
+    public function createCommande(Request $request)
     {
-        // dd($request);
+        // dd($request->all(), $id);
+        return response(['request' => $request->all()]);
         $input = $request->all();
         $validator = Validator::make($input, [
             'destinataire' => 'required',
@@ -74,7 +75,7 @@ class CommandeController extends Controller
             $couponController = new CouponController();
             $couponController->incrementNumber($id, $request->CouponName);
         }
-        
+
         return response([
             "success" => true,
             "message" => "List of products to order.",
