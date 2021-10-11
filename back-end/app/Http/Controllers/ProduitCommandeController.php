@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Produit;
 use App\Models\ProduitCommande;
 use Illuminate\Http\Request;
 
@@ -88,8 +89,37 @@ class ProduitCommandeController extends Controller
     }
 
     //checkout
-    public function checkout(Request $request, $product)
+    public function checkout($products, $idCommande)
     {
-        dd($request, $product);
+        $array = [];
+        foreach ($products as  $product) {
+            $product['id'];
+            $productUp = Produit::find($product['id']);
+            if ($productUp->prix_promotion === 0) {
+                $totale = $productUp->prix * $product['quantity'];
+            } else {
+                $totale = $productUp->prix_promotion * $product['quantity'];
+            }
+            $proco = ProduitCommande::create([
+                'produit_id' => $product['id'],
+                'commande_id' => $idCommande,
+                'upsell' => $product['upsell'],
+                'quantite' => $product['quantity'],
+                'totale' => $totale,
+            ]);
+            array_push($array, [
+                'produit_id' => $product['id'],
+                'commande_id' => $idCommande,
+                'upsell' => $product['upsell'],
+                'quantite' => $product['quantity'],
+                'totale' => $totale,
+                'ProduitCommande' => $proco->commande_id,
+            ]);
+        }
+        return response([
+            "success" => true,
+            "message" => "List of commandes .",
+            "data" => $array,
+        ]);
     }
 }
