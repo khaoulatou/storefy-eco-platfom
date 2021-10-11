@@ -21,7 +21,7 @@
               class="form-control"
               id="ville"
               placeholder="Enter the city"
-              v-model="form.ville"
+              v-model="form.ville_customer"
             />
           </div>
           <div class="col-md-6">
@@ -111,7 +111,7 @@ export default {
       productData: [],
       form: {
         destinataire: "",
-        ville: "",
+        ville_customer: "",
         phone1: "",
         phone2: "",
         address: "",
