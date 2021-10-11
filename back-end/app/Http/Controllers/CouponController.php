@@ -16,12 +16,8 @@ class CouponController extends Controller
         $coupon = DB::table('coupons')
             ->join('users', 'users.id', '=', 'coupons.user_id')
             ->select('coupons.*')
-            ->where([
-                ['coupons.nom', '=', $nom],
-                ['coupons.user_id', '=', $id],
-            ])
+            ->where('coupons.user_id', $id)->where('coupons.nom', $nom)
             ->first();
-        $coupon = Coupon::find($id);
         return $coupon;
     }
     //Verify that the coupon is effective
@@ -122,14 +118,16 @@ class CouponController extends Controller
         ], 201);
     }
     // function for increment Number of use the coupon
-    public function incrementNumber($id, $nom)
+    public function incrementNumber($id, $couponNanme)
     {
-        $coupon = $this->findCoupon($id, $nom);
+        $coupon = $this->findCoupon($id, $couponNanme);
         if (is_null($coupon)) {
             return response(['success' => false, 'message' => "This Coupon not found."]);
         } else
         if ($coupon->nombre_utilisateur < $coupon->capacity) {
-            $coupon->nombre_utilisateur++;
+            $cou = Coupon::find($coupon->id);
+            $cou->nombre_utilisateur++;
+            $cou->save();
             return response(['success' => true, "message" => "The number of uses for the coupon has been modified.", "data" => $coupon]);
         } else {
             return response(['success' => false, "message" => "The number of uses has reached the maximum.",]);
