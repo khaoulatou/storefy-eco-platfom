@@ -21,16 +21,16 @@ class CouponController extends Controller
         return $coupon;
     }
     //Verify that the coupon is effective
-    public function getCoupon(Request $request, $id)
+    public function getCoupon($id)
     {
         // $operation = ['coupons.user_id'=> $id,'coupons.nom'=> $nom];
-        $coupon = $this->findCoupon($id, $request->nom);
+        $coupon = $this->findCoupon(1, $id);
         if (is_null($coupon)) {
             return response(['success' => false, 'message' => "This Coupon not found."]);
         } else if ($coupon->active == false) {
             return response(['success' => false, 'message' => "This coupon is not activated"]);
         } else if ($coupon->active == true) {
-            if ($coupon->type_expiration == 'nombre_utilisateur') {
+            if ($coupon->type_expiration === 'nombre_utilisateur') {
                 if ($coupon->nombre_utilisateur === $coupon->capacity) {
                     return response(['success' => false, 'message' => "You cannot take advantage of this coupon because it has exceeded the maximum usage limit"]);
                 } else {
