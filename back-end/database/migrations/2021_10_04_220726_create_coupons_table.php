@@ -19,9 +19,10 @@ class CreateCouponsTable extends Migration
             $table->boolean('active');
             $table->date('dateDebut');
             $table->date('dateFin');
-            $table->integer('capacity');//2000
-            $table->integer('nombre_utilisateur');//2000
+            $table->integer('capacity'); //2000
+            $table->integer('nombre_utilisateur'); //2000
             $table->string('type_prix');
+            $table->double('remise');
             $table->string('type_expiration');
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->timestamps();
