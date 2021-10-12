@@ -16,6 +16,7 @@ class Coupon extends Model
         "nombre_utilisateur",
         "type_prix",
         "type_expiration",
+        "remise",
         "subdomain"
     ];
 }
