@@ -82,6 +82,7 @@
           <input
             id="code"
             placeholder="Enter your code"
+            @change="getCoupon"
             v-model="form.coupon"
           />
         </form>
@@ -90,7 +91,9 @@
           style="border-top: 1px solid rgba(0, 0, 0, 0.1); padding: 2vh 0"
         >
           <div class="col">TOTAL PRICE</div>
-          <div class="col text-right">$ {{ total + 5 }}</div>
+          <div class="col text-right">
+            {{ `$ ${coupooon}` }}
+          </div>
         </div>
       </div>
       <!-- End Summary -->
@@ -109,6 +112,8 @@ export default {
   data() {
     return {
       productData: [],
+      statusCoupon: null,
+      totaleRemise: null,
       form: {
         destinataire: "",
         ville_customer: "",
@@ -116,6 +121,7 @@ export default {
         phone2: "",
         address: "",
         coupon: null,
+        couponData: "",
       },
       total: null,
     };
@@ -127,6 +133,31 @@ export default {
         (acc, el) => acc + el.prix * el.quantity,
         0
       );
+    },
+    async getCoupon() {
+      if (this.form.coupon) {
+        const response = await axios.post(
+          `http://localhost:8000/api/v1/getCoupon/${this.form.coupon}`,
+          null
+        );
+        this.statusCoupon = response.data.success;
+        if (response.data.success) {
+          alert(response.data.message);
+          this.couponData = response.data.data;
+          let totaleRemise = "";
+          if (this.couponData.type_prix == "percentage") {
+            totaleRemise = this.total * (1 - this.couponData.remise / 100);
+            this.totaleRemise = totaleRemise.toFixed(2);
+          } else {
+            totaleRemise = this.total - this.couponData.remise;
+            this.totaleRemise = totaleRemise.toFixed(2);
+          }
+        } else {
+          alert(response.data.message);
+        }
+      } else {
+        this.statusCoupon = false;
+      }
     },
     async addCommande() {
       // POST request using axios with async/await
@@ -140,6 +171,11 @@ export default {
         commande
       );
       console.log(response.data);
+    },
+  },
+  computed: {
+    coupooon() {
+      return this.statusCoupon ? this.totaleRemise : this.total;
     },
   },
 };
