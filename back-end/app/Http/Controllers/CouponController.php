@@ -20,32 +20,6 @@ class CouponController extends Controller
             ->first();
         return $coupon;
     }
-    //Verify that the coupon is effective
-    public function getCoupon($id)
-    {
-        // $operation = ['coupons.user_id'=> $id,'coupons.nom'=> $nom];
-        $coupon = $this->findCoupon(1, $id);
-        if (is_null($coupon)) {
-            return response(['success' => false, 'message' => "This Coupon not found."]);
-        } else if ($coupon->active == false) {
-            return response(['success' => false, 'message' => "This coupon is not activated"]);
-        } else if ($coupon->active == true) {
-            if ($coupon->type_expiration === 'nombre_utilisateur') {
-                if ($coupon->nombre_utilisateur === $coupon->capacity) {
-                    return response(['success' => false, 'message' => "You cannot take advantage of this coupon because it has exceeded the maximum usage limit"]);
-                } else {
-                    return response(['success' => true, 'message' => "Successfully reduced", "data" => $coupon], 201);
-                }
-            } else {
-                $date = new Carbon;
-                if ($date > $coupon->dateFin) {
-                    return response(['success' => false, 'message' => "This coupon . has expired"]);
-                } else {
-                    return response(['success' => true, 'message' => "Successfully reduced", "data" => $coupon], 201);
-                }
-            }
-        }
-    }
 
     //Get all coupons
     public function getAllCoupon()
@@ -116,22 +90,6 @@ class CouponController extends Controller
             "message" => "Coupon details have been modified successfully.",
             "data" => $coupon
         ], 201);
-    }
-    // function for increment Number of use the coupon
-    public function incrementNumber($id, $couponNanme)
-    {
-        $coupon = $this->findCoupon($id, $couponNanme);
-        if (is_null($coupon)) {
-            return response(['success' => false, 'message' => "This Coupon not found."]);
-        } else
-        if ($coupon->nombre_utilisateur < $coupon->capacity) {
-            $cou = Coupon::find($coupon->id);
-            $cou->nombre_utilisateur++;
-            $cou->save();
-            return response(['success' => true, "message" => "The number of uses for the coupon has been modified.", "data" => $cou]);
-        } else {
-            return response(['success' => false, "message" => "The number of uses has reached the maximum.",]);
-        }
     }
     /**
      * Remove the specified resource from storage.
